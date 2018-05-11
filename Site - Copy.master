@@ -1,0 +1,160 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site - Copy.master.cs" Inherits="Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Arctic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <%--<link rel="stylesheet" href="css/bootstrap.css"/>--%>
+    <%--<link rel="stylesheet" href="css/font-awesome.css"/>
+	<link rel="stylesheet" href="css/style.css"/>--%>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.floatinglabel.min.js"></script>
+    <script src="Script/jquery-3.2.1.min.js"></script>
+    <script src="js/ticker.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+
+
+        <div class="block-top">
+            <div class="container">
+                <ul id="webTicker">
+                    <li>
+                        <asp:Label ID="lblbit" runat="server" Font-Bold="true"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lbllit" runat="server" Font-Bold="true"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lbldash" runat="server" Font-Bold="true"></asp:Label></li>
+                    <li>
+                        <asp:Label ID="lblripple" runat="server" Font-Bold="true"></asp:Label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav class="navbar navbar-expand-lg navbar-dark transparent">
+                        <a class="navbar-brand" href="default.aspx">Arctic</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="AboutUs.aspx">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="HowItWorks.aspx">How it works</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="ContactUs.aspx">Contact Us</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="Login.aspx">Log Out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+
+
+
+
+
+
+
+    <footer>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer-nav-container">
+                        <ul class="footer-nav">
+                            <li><a href="AboutUs.aspx">About</a></li>
+                            <li><a class="nav-link ajax-load" href="HowItWorks.aspx">How it works</a></li>
+                            <li><a class="nav-link ajax-load" href="ContactUs.aspx">Contact Us</a></li>
+                            <li><a class="nav-link ajax-load" href="Login.aspx">Log Out</a></li>
+                            <li><a class="nav-link ajax-load footer-buy-now-button" href="default.aspx">Buy now</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--row-->
+            <div class="row align-items-center">
+                <div class="col-md-6"><a class="navbar-brand ajax-load" href="home.html">Arctic</a></div>
+                <div class="col-md-6 text-right footer-copyright">
+                    &copy; 2018 All rights reserved by Arctic
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script type="text/javascript">
+        function httpGetUsd() {
+
+            var theUrl = "https://api.coinmarketcap.com/v1/ticker/";
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", theUrl, false); // false for synchronous request
+            xmlHttp.send(null);
+            //var getContact = JSON.parse(xmlHttp.responseText); 
+            //document.write(getContact.name + ", " + getContact.USD.buy);
+            //return xmlHttp.responseText
+            var obj = $.parseJSON(xmlHttp.responseText);
+            var rate='';
+
+            for (var i = 0; i <15; i++) {
+                
+                rate = obj[i].price_usd;
+                if (obj[i].id == "bitcoin")
+                {
+                    document.getElementById("<%=lblbit.ClientID%>").innerHTML = rate + "/1" + "     USD/BTC";
+                }
+                if (obj[i].id == "litecoin") {
+                    document.getElementById("<%=lbllit.ClientID%>").innerHTML = rate + "/1" + "     USD/LTC";
+                }
+                if (obj[i].id == "dash") {
+                    document.getElementById("<%=lbldash.ClientID%>").innerHTML = rate + "/1" + "    USD/DASH";
+                }
+                if (obj[i].id == "ripple") {
+                    document.getElementById("<%=lblripple.ClientID%>").innerHTML = rate + "/1" + "    USD/XRP";
+                }
+            }
+
+            
+        }
+        var myVar = setInterval(httpGetUsd, 1000);
+
+        /*added by Vipan*/
+
+        $('#webTicker').webTicker();
+
+    </script>
+</body>
+</html>
